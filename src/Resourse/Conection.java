@@ -1,73 +1,27 @@
-
 package Resourse;
 
-import Resourse.Information;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class Conection {
-    private final Information info = new Information();
-    private static Connection conec;
-    private static Statement stm;
-    private String ip, port, user, password, driver, database;
+    public static EntityManagerFactory emf = null;
     
-    public Statement getStatement()
-    {
+    public static EntityManager CreateEntityManager(){
         try{
-
-            stm = conec.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-        }catch(SQLException ex)
-                {
-                   System.out.print(ex.getMessage());
-                }
-        return stm;
-    }
-    
-    public Connection getconec()
-    {
-        return conec;
-    }
-    
-    public Conection()
-    {
-        if(conec == null)
-        {
-            ip = info.getData("URL");
-            port = info.getData("PORT");
-            user = info.getData("USER");
-            password = info.getData("PASSWORD");
-            driver = info.getData("DRIVER");
-            database = info.getData("DATABASE");
-            try{
-            Class.forName(driver);
-            String url = "jdbc:mysql://"+ip+":"+port+"/"+database;
-            conec = DriverManager.getConnection(url, user , password);
-            }catch(ClassNotFoundException | SQLException ex){
-                System.out.print(ex.getMessage());
+            if(emf == null){
+                emf = Persistence.createEntityManagerFactory("JPA_pruebaPU");
             }
+        }catch(Exception ex){
+            System.out.print("Error: "+ex.getMessage());
         }
+        return emf.createEntityManager();
     }
     
-    public Connection tryConexion(String ip, String port, String user, String password, String driver, String database)
-    {
-        Connection c = null;
-        try{
-            Class.forName(driver);
-            String url = "jdbc:mysql://"+ip+":"+port+"/"+database;
-            c = DriverManager.getConnection(url, user , password);
-        }catch(ClassNotFoundException | SQLException ex){
-            System.out.print(ex.getMessage());
+    public static void Disconnect(EntityManager em){
+        if(em != null){
+            em.close();
+            emf.close();
         }
-        return c;
-    }
-    
-    public void closeConec() throws SQLException
-    {
-        conec.close();
-        conec = null;
     }
 }

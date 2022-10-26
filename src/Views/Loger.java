@@ -1,7 +1,7 @@
 
 package Views;
 
-import Panels.Loger.UserCat;
+import Views.Panels.Loger.UserCat;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
