@@ -7,15 +7,15 @@ import javax.persistence.Persistence;
 public class Conection {
     public static EntityManagerFactory emf = null;
     
-    public static EntityManager CreateEntityManager(){
+    public static EntityManagerFactory CreateEntityManager(){
         try{
             if(emf == null){
-                emf = Persistence.createEntityManagerFactory("JPA_pruebaPU");
+                emf = Persistence.createEntityManagerFactory("MarketPlacePU");
             }
         }catch(Exception ex){
             System.out.print("Error: "+ex.getMessage());
         }
-        return emf.createEntityManager();
+        return emf;
     }
     
     public static void Disconnect(EntityManager em){

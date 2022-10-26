@@ -1,7 +1,6 @@
 package Views.Dialogs;
 
 import DAO.BrandDAO;
-import Models.Brand;
 import Resourse.Utilities;
 
 public class AddBrandDialog extends javax.swing.JDialog {
@@ -164,23 +163,18 @@ public class AddBrandDialog extends javax.swing.JDialog {
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
         if(validateBrand()){
-            boolean result = AddBrand();
-            
-            if(result){
-                this.dispose();
-            }
-            
-            txtError.setText("Ha ocurrido un error al agregar la nueva marca");
+            AddBrand();
         }
     }//GEN-LAST:event_btnCheckInActionPerformed
 
     
-    private boolean AddBrand(){
+    private void AddBrand(){
         
         BrandDAO brandDAO = new BrandDAO();
         brandDAO.setName(txtName.getText());
         brandDAO.save();
-        return true;
+        
+        this.dispose();
     }
     
     private boolean validateBrand(){
@@ -188,7 +182,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
             txtError.setText("El campo del nombre es obligatorio");
             return false;
         }
-        
+
         return true;
     }
     /**

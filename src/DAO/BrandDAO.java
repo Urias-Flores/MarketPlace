@@ -1,9 +1,10 @@
 package DAO;
 
 import Controllers.BrandJpaController;
+import Controllers.exceptions.IllegalOrphanException;
+import Controllers.exceptions.NonexistentEntityException;
 import Models.Brand;
 import Resourse.Conection;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class BrandDAO {
@@ -15,8 +16,8 @@ public class BrandDAO {
     private String Name;
     
     public BrandDAO(){
-        EntityManager em =Conection.CreateEntityManager();
-        //brandJpaController = new BrandJpaController(em);
+        EntityManagerFactory em =Conection.CreateEntityManager();
+        brandJpaController = new BrandJpaController(em);
     }
 
     public int getBrandID() {
@@ -39,5 +40,27 @@ public class BrandDAO {
         Brand brand = new Brand();
         brand.setName(Name);
         brandJpaController.create(brand);
+    }
+    
+    public boolean edit(){
+        Brand brand = new Brand();
+        brand.setBrandID(BrandID);
+        brand.setName(Name);
+        
+        try {
+            brandJpaController.edit(brand);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean delete(){
+        try {
+            brandJpaController.destroy(BrandID);
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            return false;
+        }
+        return true;
     }
 }
