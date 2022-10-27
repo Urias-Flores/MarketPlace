@@ -15,11 +15,11 @@ public class AddBrandVO {
         BrandDAO brandDAO = new BrandDAO();
         brandDAO.setName(Name.getText());
         if(Name.getName().isEmpty()){
-            
             brandDAO.save();
         }else{
-            brandDAO.setBrandID(Integer.parseInt(Name.getName()));
-            
+            brandDAO.setBrandID(Integer.parseInt(Name.getText()));
         }
     }
+    
+    
 }
