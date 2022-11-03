@@ -160,7 +160,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_pnBarraMouseDragged
 
     private void txtCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCloseMouseClicked
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_txtCloseMouseClicked
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed

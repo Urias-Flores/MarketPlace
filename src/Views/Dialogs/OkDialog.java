@@ -1,9 +1,50 @@
 
 package Views.Dialogs;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 public class OkDialog extends javax.swing.JDialog {
 
     private int X, Y;
+    
+    private Icon iconDelete = new ImageIcon(getClass().getResource("/Icons/delete.png"));
+    private Icon iconCancel = new ImageIcon(getClass().getResource("/Icons/cancel.png"));
+    private Icon iconError = new ImageIcon(getClass().getResource("/Icons/error.png"));
+    private Icon iconOK = new ImageIcon(getClass().getResource("/Icons/ok.png"));
+    private Icon iconWarning = new ImageIcon(getClass().getResource("/Icons/warning.png"));
+    
+    public void setIcon(int Type)
+    {
+        switch(Type){
+            case -3:
+                lbIcon.setIcon(iconError);
+                break;
+            case -2:
+                lbIcon.setIcon(iconWarning);
+                break;
+            case -1:
+                lbIcon.setIcon(iconDelete);
+                break;
+            case 0:
+                lbIcon.setIcon(iconCancel);
+                break;
+            case 1:
+                lbIcon.setIcon(iconOK);
+                break;
+            default:
+                lbIcon.setIcon(iconError);
+                break;
+        }
+    }
+    
+    public void setIcon(Icon icon){
+        lbIcon.setIcon(icon);
+    }
+    
+    public void setMessage(String text){
+        txtMessage.setText(text);
+    }
     
     public OkDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -22,13 +63,16 @@ public class OkDialog extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         pnBarra = new javax.swing.JPanel();
         txtClose = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        txtMessage = new javax.swing.JLabel();
+        lbIcon = new javax.swing.JLabel();
+        btnCheckIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240)));
 
         pnBarra.setBackground(new java.awt.Color(15, 88, 132));
         pnBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -57,7 +101,7 @@ public class OkDialog extends javax.swing.JDialog {
         pnBarraLayout.setHorizontalGroup(
             pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
-                .addGap(0, 536, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(txtClose, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnBarraLayout.setVerticalGroup(
@@ -65,34 +109,51 @@ public class OkDialog extends javax.swing.JDialog {
             .addComponent(txtClose, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Descripcion");
+        txtMessage.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txtMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMessage.setText("Descripcion");
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/error.png"))); // NOI18N
+        lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/error.png"))); // NOI18N
+
+        btnCheckIn.setBackground(new java.awt.Color(49, 152, 65));
+        btnCheckIn.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        btnCheckIn.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckIn.setText("Aceptar");
+        btnCheckIn.setPreferredSize(new java.awt.Dimension(94, 32));
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckInActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
+            .addComponent(pnBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(pnBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(104, 104, 104))
+                .addComponent(txtMessage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -124,6 +185,11 @@ public class OkDialog extends javax.swing.JDialog {
         X = evt.getX();
         Y = evt.getY();
     }//GEN-LAST:event_pnBarraMousePressed
+
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btnCheckInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,10 +235,11 @@ public class OkDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton btnCheckIn;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbIcon;
     private javax.swing.JPanel pnBarra;
     private javax.swing.JLabel txtClose;
+    private javax.swing.JLabel txtMessage;
     // End of variables declaration//GEN-END:variables
 }
