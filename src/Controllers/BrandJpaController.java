@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Controllers;
 
 import Controllers.exceptions.IllegalOrphanException;
@@ -14,6 +18,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+/**
+ *
+ * @author Dell
+ */
 public class BrandJpaController implements Serializable {
 
     public BrandJpaController(EntityManagerFactory emf) {
@@ -35,7 +43,7 @@ public class BrandJpaController implements Serializable {
             em.getTransaction().begin();
             List<Product> attachedProductList = new ArrayList<Product>();
             for (Product productListProductToAttach : brand.getProductList()) {
-                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getProducrID());
+                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getProductID());
                 attachedProductList.add(productListProductToAttach);
             }
             brand.setProductList(attachedProductList);
@@ -79,7 +87,7 @@ public class BrandJpaController implements Serializable {
             }
             List<Product> attachedProductListNew = new ArrayList<Product>();
             for (Product productListNewProductToAttach : productListNew) {
-                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getProducrID());
+                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getProductID());
                 attachedProductListNew.add(productListNewProductToAttach);
             }
             productListNew = attachedProductListNew;

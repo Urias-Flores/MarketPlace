@@ -1,16 +1,32 @@
 package DAO;
 
+import Controllers.ProductJpaController;
+import Controllers.exceptions.NonexistentEntityException;
+import Models.Brand;
+import Models.Category;
+import Models.Product;
+import Resourse.Conection;
+import javax.persistence.EntityManagerFactory;
+
 public class ProductDAO {
+    
+    private EntityManagerFactory emf = null;
+    private ProductJpaController productJpaController = null; 
     
     private int ProductID;
     private String Description;
-    private int BrandID;
-    private int CategoryID;
+    private Brand BrandID;
+    private Category CategoryID;
     private float PriceBuy;
     private float PriceSale;
     private byte[] Imagen;
     private String ImageExtension;
     private String Barcode;
+    
+    public void ProductDAO(){
+        this.emf = Conection.CreateEntityManager();
+        this.productJpaController = new ProductJpaController(emf);
+    }
 
     public int getProductID() {
         return ProductID;
@@ -28,19 +44,19 @@ public class ProductDAO {
         this.Description = Description;
     }
 
-    public int getBrandID() {
+    public Brand getBrandID() {
         return BrandID;
     }
 
-    public void setBrandID(int BrandID) {
+    public void setBrandID(Brand BrandID) {
         this.BrandID = BrandID;
     }
 
-    public int getCategoryID() {
+    public Category getCategoryID() {
         return CategoryID;
     }
 
-    public void setCategoryID(int CategoryID) {
+    public void setCategoryID(Category CategoryID) {
         this.CategoryID = CategoryID;
     }
 
@@ -84,13 +100,36 @@ public class ProductDAO {
         this.Barcode = Barcode;
     }
     
-    public void create(){
+    public void save(){
+        Product product = new Product();
         
+        product.setDescription(Description);
+        product.setBrand(BrandID);
+        product.setCategory(CategoryID);
+        product.setPriceBuy(PriceBuy);
+        product.setPriceSale(PriceSale);
+        product.setImage(Imagen);
+        product.setImageExtension(ImageExtension);
+        product.setBarcode(Barcode);
+        
+        productJpaController.create(product);
     }
     
     public boolean edit(){
+        Product product = new Product();
+        
+        product.setProductID(ProductID);
+        product.setDescription(Description);
+        product.setBrand(BrandID);
+        product.setCategory(CategoryID);
+        product.setPriceBuy(PriceBuy);
+        product.setPriceSale(PriceSale);
+        product.setImage(Imagen);
+        product.setImageExtension(ImageExtension);
+        product.setBarcode(Barcode);
+        
         try {
-            
+            productJpaController.edit(product);
         } catch (Exception e) {
             return false;
         }
@@ -99,8 +138,8 @@ public class ProductDAO {
     
     public boolean delete(){
         try {
-            
-        } catch (Exception e) {
+            productJpaController.destroy(ProductID);
+        } catch (NonexistentEntityException e) {
             return false;
         }
         return true;

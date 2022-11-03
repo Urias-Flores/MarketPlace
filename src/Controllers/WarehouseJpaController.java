@@ -11,9 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Models.Employee;
-import Models.Product;
 import Models.Warehouse;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,9 +32,6 @@ public class WarehouseJpaController implements Serializable {
     }
 
     public void create(Warehouse warehouse) {
-        if (warehouse.getProductList() == null) {
-            warehouse.setProductList(new ArrayList<Product>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -46,25 +41,10 @@ public class WarehouseJpaController implements Serializable {
                 employee = em.getReference(employee.getClass(), employee.getEmpleyeeID());
                 warehouse.setEmployee(employee);
             }
-            List<Product> attachedProductList = new ArrayList<Product>();
-            for (Product productListProductToAttach : warehouse.getProductList()) {
-                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getProducrID());
-                attachedProductList.add(productListProductToAttach);
-            }
-            warehouse.setProductList(attachedProductList);
             em.persist(warehouse);
             if (employee != null) {
                 employee.getWarehouseList().add(warehouse);
                 employee = em.merge(employee);
-            }
-            for (Product productListProduct : warehouse.getProductList()) {
-                Warehouse oldWarehouseOfProductListProduct = productListProduct.getWarehouse();
-                productListProduct.setWarehouse(warehouse);
-                productListProduct = em.merge(productListProduct);
-                if (oldWarehouseOfProductListProduct != null) {
-                    oldWarehouseOfProductListProduct.getProductList().remove(productListProduct);
-                    oldWarehouseOfProductListProduct = em.merge(oldWarehouseOfProductListProduct);
-                }
             }
             em.getTransaction().commit();
         } finally {
@@ -82,19 +62,10 @@ public class WarehouseJpaController implements Serializable {
             Warehouse persistentWarehouse = em.find(Warehouse.class, warehouse.getWarehouseID());
             Employee employeeOld = persistentWarehouse.getEmployee();
             Employee employeeNew = warehouse.getEmployee();
-            List<Product> productListOld = persistentWarehouse.getProductList();
-            List<Product> productListNew = warehouse.getProductList();
             if (employeeNew != null) {
                 employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getEmpleyeeID());
                 warehouse.setEmployee(employeeNew);
             }
-            List<Product> attachedProductListNew = new ArrayList<Product>();
-            for (Product productListNewProductToAttach : productListNew) {
-                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getProducrID());
-                attachedProductListNew.add(productListNewProductToAttach);
-            }
-            productListNew = attachedProductListNew;
-            warehouse.setProductList(productListNew);
             warehouse = em.merge(warehouse);
             if (employeeOld != null && !employeeOld.equals(employeeNew)) {
                 employeeOld.getWarehouseList().remove(warehouse);
@@ -103,23 +74,6 @@ public class WarehouseJpaController implements Serializable {
             if (employeeNew != null && !employeeNew.equals(employeeOld)) {
                 employeeNew.getWarehouseList().add(warehouse);
                 employeeNew = em.merge(employeeNew);
-            }
-            for (Product productListOldProduct : productListOld) {
-                if (!productListNew.contains(productListOldProduct)) {
-                    productListOldProduct.setWarehouse(null);
-                    productListOldProduct = em.merge(productListOldProduct);
-                }
-            }
-            for (Product productListNewProduct : productListNew) {
-                if (!productListOld.contains(productListNewProduct)) {
-                    Warehouse oldWarehouseOfProductListNewProduct = productListNewProduct.getWarehouse();
-                    productListNewProduct.setWarehouse(warehouse);
-                    productListNewProduct = em.merge(productListNewProduct);
-                    if (oldWarehouseOfProductListNewProduct != null && !oldWarehouseOfProductListNewProduct.equals(warehouse)) {
-                        oldWarehouseOfProductListNewProduct.getProductList().remove(productListNewProduct);
-                        oldWarehouseOfProductListNewProduct = em.merge(oldWarehouseOfProductListNewProduct);
-                    }
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -154,11 +108,6 @@ public class WarehouseJpaController implements Serializable {
             if (employee != null) {
                 employee.getWarehouseList().remove(warehouse);
                 employee = em.merge(employee);
-            }
-            List<Product> productList = warehouse.getProductList();
-            for (Product productListProduct : productList) {
-                productListProduct.setWarehouse(null);
-                productListProduct = em.merge(productListProduct);
             }
             em.remove(warehouse);
             em.getTransaction().commit();

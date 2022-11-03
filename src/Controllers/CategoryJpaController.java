@@ -43,7 +43,7 @@ public class CategoryJpaController implements Serializable {
             em.getTransaction().begin();
             List<Product> attachedProductList = new ArrayList<Product>();
             for (Product productListProductToAttach : category.getProductList()) {
-                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getProducrID());
+                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getProductID());
                 attachedProductList.add(productListProductToAttach);
             }
             category.setProductList(attachedProductList);
@@ -87,7 +87,7 @@ public class CategoryJpaController implements Serializable {
             }
             List<Product> attachedProductListNew = new ArrayList<Product>();
             for (Product productListNewProductToAttach : productListNew) {
-                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getProducrID());
+                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getProductID());
                 attachedProductListNew.add(productListNewProductToAttach);
             }
             productListNew = attachedProductListNew;

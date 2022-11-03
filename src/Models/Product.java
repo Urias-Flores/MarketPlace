@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProducrID", query = "SELECT p FROM Product p WHERE p.producrID = :producrID"),
+    @NamedQuery(name = "Product.findByProductID", query = "SELECT p FROM Product p WHERE p.productID = :productID"),
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByPriceBuy", query = "SELECT p FROM Product p WHERE p.priceBuy = :priceBuy"),
     @NamedQuery(name = "Product.findByPriceSale", query = "SELECT p FROM Product p WHERE p.priceSale = :priceSale"),
@@ -45,8 +37,8 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ProducrID")
-    private Integer producrID;
+    @Column(name = "ProductID")
+    private Integer productID;
     @Basic(optional = false)
     @Column(name = "Description")
     private String description;
@@ -71,29 +63,20 @@ public class Product implements Serializable {
     @ManyToOne(optional = false)
     private Brand brand;
     @JoinColumns({
-        @JoinColumn(name = "Category", referencedColumnName = "CategoryID"),
-        @JoinColumn(name = "Category", referencedColumnName = "CategoryID")})
+        @JoinColumn(name = "CategoryID", referencedColumnName = "CategoryID"),
+        @JoinColumn(name = "CategoryID", referencedColumnName = "CategoryID")})
     @ManyToOne(optional = false)
     private Category category;
-    @JoinColumns({
-        @JoinColumn(name = "WarehouseID", referencedColumnName = "WarehouseID"),
-        @JoinColumn(name = "WarehouseID", referencedColumnName = "WarehouseID")})
-    @ManyToOne
-    private Warehouse warehouse;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
-    private List<Invoicedetail> invoicedetailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
-    private List<Buydetail> buydetailList;
 
     public Product() {
     }
 
-    public Product(Integer producrID) {
-        this.producrID = producrID;
+    public Product(Integer productID) {
+        this.productID = productID;
     }
 
-    public Product(Integer producrID, String description, float priceBuy, float priceSale, byte[] image, String imageExtension) {
-        this.producrID = producrID;
+    public Product(Integer productID, String description, float priceBuy, float priceSale, byte[] image, String imageExtension) {
+        this.productID = productID;
         this.description = description;
         this.priceBuy = priceBuy;
         this.priceSale = priceSale;
@@ -101,12 +84,12 @@ public class Product implements Serializable {
         this.imageExtension = imageExtension;
     }
 
-    public Integer getProducrID() {
-        return producrID;
+    public Integer getProductID() {
+        return productID;
     }
 
-    public void setProducrID(Integer producrID) {
-        this.producrID = producrID;
+    public void setProductID(Integer productID) {
+        this.productID = productID;
     }
 
     public String getDescription() {
@@ -173,36 +156,10 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    @XmlTransient
-    public List<Invoicedetail> getInvoicedetailList() {
-        return invoicedetailList;
-    }
-
-    public void setInvoicedetailList(List<Invoicedetail> invoicedetailList) {
-        this.invoicedetailList = invoicedetailList;
-    }
-
-    @XmlTransient
-    public List<Buydetail> getBuydetailList() {
-        return buydetailList;
-    }
-
-    public void setBuydetailList(List<Buydetail> buydetailList) {
-        this.buydetailList = buydetailList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (producrID != null ? producrID.hashCode() : 0);
+        hash += (productID != null ? productID.hashCode() : 0);
         return hash;
     }
 
@@ -213,7 +170,7 @@ public class Product implements Serializable {
             return false;
         }
         Product other = (Product) object;
-        if ((this.producrID == null && other.producrID != null) || (this.producrID != null && !this.producrID.equals(other.producrID))) {
+        if ((this.productID == null && other.productID != null) || (this.productID != null && !this.productID.equals(other.productID))) {
             return false;
         }
         return true;
@@ -221,7 +178,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Product[ producrID=" + producrID + " ]";
+        return "Models.Product[ productID=" + productID + " ]";
     }
     
 }

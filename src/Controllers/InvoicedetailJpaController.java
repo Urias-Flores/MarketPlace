@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Models.Invoice;
 import Models.Invoicedetail;
-import Models.Product;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,19 +41,10 @@ public class InvoicedetailJpaController implements Serializable {
                 invoiceID = em.getReference(invoiceID.getClass(), invoiceID.getInvoiveID());
                 invoicedetail.setInvoiceID(invoiceID);
             }
-            Product productID = invoicedetail.getProductID();
-            if (productID != null) {
-                productID = em.getReference(productID.getClass(), productID.getProducrID());
-                invoicedetail.setProductID(productID);
-            }
             em.persist(invoicedetail);
             if (invoiceID != null) {
                 invoiceID.getInvoicedetailList().add(invoicedetail);
                 invoiceID = em.merge(invoiceID);
-            }
-            if (productID != null) {
-                productID.getInvoicedetailList().add(invoicedetail);
-                productID = em.merge(productID);
             }
             em.getTransaction().commit();
         } finally {
@@ -72,15 +62,9 @@ public class InvoicedetailJpaController implements Serializable {
             Invoicedetail persistentInvoicedetail = em.find(Invoicedetail.class, invoicedetail.getInvoiceDetailID());
             Invoice invoiceIDOld = persistentInvoicedetail.getInvoiceID();
             Invoice invoiceIDNew = invoicedetail.getInvoiceID();
-            Product productIDOld = persistentInvoicedetail.getProductID();
-            Product productIDNew = invoicedetail.getProductID();
             if (invoiceIDNew != null) {
                 invoiceIDNew = em.getReference(invoiceIDNew.getClass(), invoiceIDNew.getInvoiveID());
                 invoicedetail.setInvoiceID(invoiceIDNew);
-            }
-            if (productIDNew != null) {
-                productIDNew = em.getReference(productIDNew.getClass(), productIDNew.getProducrID());
-                invoicedetail.setProductID(productIDNew);
             }
             invoicedetail = em.merge(invoicedetail);
             if (invoiceIDOld != null && !invoiceIDOld.equals(invoiceIDNew)) {
@@ -90,14 +74,6 @@ public class InvoicedetailJpaController implements Serializable {
             if (invoiceIDNew != null && !invoiceIDNew.equals(invoiceIDOld)) {
                 invoiceIDNew.getInvoicedetailList().add(invoicedetail);
                 invoiceIDNew = em.merge(invoiceIDNew);
-            }
-            if (productIDOld != null && !productIDOld.equals(productIDNew)) {
-                productIDOld.getInvoicedetailList().remove(invoicedetail);
-                productIDOld = em.merge(productIDOld);
-            }
-            if (productIDNew != null && !productIDNew.equals(productIDOld)) {
-                productIDNew.getInvoicedetailList().add(invoicedetail);
-                productIDNew = em.merge(productIDNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -132,11 +108,6 @@ public class InvoicedetailJpaController implements Serializable {
             if (invoiceID != null) {
                 invoiceID.getInvoicedetailList().remove(invoicedetail);
                 invoiceID = em.merge(invoiceID);
-            }
-            Product productID = invoicedetail.getProductID();
-            if (productID != null) {
-                productID.getInvoicedetailList().remove(invoicedetail);
-                productID = em.merge(productID);
             }
             em.remove(invoicedetail);
             em.getTransaction().commit();

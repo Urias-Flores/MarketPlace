@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Models.Buy;
 import Models.Buydetail;
-import Models.Product;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,19 +41,10 @@ public class BuydetailJpaController implements Serializable {
                 buyID = em.getReference(buyID.getClass(), buyID.getBuyID());
                 buydetail.setBuyID(buyID);
             }
-            Product productID = buydetail.getProductID();
-            if (productID != null) {
-                productID = em.getReference(productID.getClass(), productID.getProducrID());
-                buydetail.setProductID(productID);
-            }
             em.persist(buydetail);
             if (buyID != null) {
                 buyID.getBuydetailList().add(buydetail);
                 buyID = em.merge(buyID);
-            }
-            if (productID != null) {
-                productID.getBuydetailList().add(buydetail);
-                productID = em.merge(productID);
             }
             em.getTransaction().commit();
         } finally {
@@ -72,15 +62,9 @@ public class BuydetailJpaController implements Serializable {
             Buydetail persistentBuydetail = em.find(Buydetail.class, buydetail.getBuyDetailID());
             Buy buyIDOld = persistentBuydetail.getBuyID();
             Buy buyIDNew = buydetail.getBuyID();
-            Product productIDOld = persistentBuydetail.getProductID();
-            Product productIDNew = buydetail.getProductID();
             if (buyIDNew != null) {
                 buyIDNew = em.getReference(buyIDNew.getClass(), buyIDNew.getBuyID());
                 buydetail.setBuyID(buyIDNew);
-            }
-            if (productIDNew != null) {
-                productIDNew = em.getReference(productIDNew.getClass(), productIDNew.getProducrID());
-                buydetail.setProductID(productIDNew);
             }
             buydetail = em.merge(buydetail);
             if (buyIDOld != null && !buyIDOld.equals(buyIDNew)) {
@@ -90,14 +74,6 @@ public class BuydetailJpaController implements Serializable {
             if (buyIDNew != null && !buyIDNew.equals(buyIDOld)) {
                 buyIDNew.getBuydetailList().add(buydetail);
                 buyIDNew = em.merge(buyIDNew);
-            }
-            if (productIDOld != null && !productIDOld.equals(productIDNew)) {
-                productIDOld.getBuydetailList().remove(buydetail);
-                productIDOld = em.merge(productIDOld);
-            }
-            if (productIDNew != null && !productIDNew.equals(productIDOld)) {
-                productIDNew.getBuydetailList().add(buydetail);
-                productIDNew = em.merge(productIDNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -132,11 +108,6 @@ public class BuydetailJpaController implements Serializable {
             if (buyID != null) {
                 buyID.getBuydetailList().remove(buydetail);
                 buyID = em.merge(buyID);
-            }
-            Product productID = buydetail.getProductID();
-            if (productID != null) {
-                productID.getBuydetailList().remove(buydetail);
-                productID = em.merge(productID);
             }
             em.remove(buydetail);
             em.getTransaction().commit();

@@ -9,15 +9,15 @@ import javax.persistence.EntityManagerFactory;
 
 public class BrandDAO {
     
-    EntityManagerFactory emf = null;
-    BrandJpaController brandJpaController = null;
+    private EntityManagerFactory emf = null;
+    private BrandJpaController brandJpaController = null;
     
     private int BrandID;
     private String Name;
     
     public BrandDAO(){
-        EntityManagerFactory em =Conection.CreateEntityManager();
-        brandJpaController = new BrandJpaController(em);
+        this.emf = Conection.CreateEntityManager();
+        brandJpaController = new BrandJpaController(emf);
     }
 
     public int getBrandID() {
