@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Main.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Panels/Control/Dialogs/AddProductDialog.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Panels/Facturacion/Factura.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Panels/Control/Productos.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Panels/Control/Dialogs/Dialogs.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/Views/Panels/Control/Components/ProductComponent.java</file>
+            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/MarketPlace/src/VO/AddBrandVO.java</file>
         </group>
     </open-files>
 </project-private>

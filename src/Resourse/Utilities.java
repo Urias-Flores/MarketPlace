@@ -2,6 +2,7 @@
 package Resourse;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
@@ -99,6 +100,12 @@ public class Utilities {
             lb.setBackground(new Color(15,88,132));
         }
     };
+    
+    public static void showNewDialog(Component old, Component newComponent){
+        old.setVisible(false);
+        newComponent.setVisible(true);
+        old.setVisible(true);
+    }
 
     public static String getActualUser() {
         return ActualUser;

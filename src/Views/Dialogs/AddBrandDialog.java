@@ -1,16 +1,18 @@
 package Views.Dialogs;
 
-import DAO.BrandDAO;
 import Resourse.Utilities;
+import VO.AddBrandVO;
 
 public class AddBrandDialog extends javax.swing.JDialog {
 
     private int X, Y;
+    private final AddBrandVO addBrandVO;
     
     public AddBrandDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         txtClose.addMouseListener(Utilities.getMlButtonClose());
+        addBrandVO = new AddBrandVO(txtName, txtError);
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +71,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
         );
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 22)); // NOI18N
-        jLabel2.setText("Agregar nuevo producto");
+        jLabel2.setText("Agregar nueva marca");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel3.setText("Nombre");
@@ -162,29 +164,11 @@ public class AddBrandDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCloseMouseClicked
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
-        if(validateBrand()){
-            AddBrand();
+        if(addBrandVO.validate()){
+            addBrandVO.saveBrand();
         }
     }//GEN-LAST:event_btnCheckInActionPerformed
 
-    
-    private void AddBrand(){
-        
-        BrandDAO brandDAO = new BrandDAO();
-        brandDAO.setName(txtName.getText());
-        brandDAO.save();
-        
-        this.dispose();
-    }
-    
-    private boolean validateBrand(){
-        if(txtName.getText().isEmpty()){
-            txtError.setText("El campo del nombre es obligatorio");
-            return false;
-        }
-
-        return true;
-    }
     /**
      * @param args the command line arguments
      */
