@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,7 +47,7 @@ public class Employee implements Serializable {
     private String name;
     @Basic(optional = false)
     @Column(name = "DNI")
-    private int dni;
+    private String dni;
     @Basic(optional = false)
     @Column(name = "Date")
     @Temporal(TemporalType.DATE)
@@ -63,9 +59,7 @@ public class Employee implements Serializable {
     @Column(name = "Payment")
     private float payment;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-    private List<Warehouse> warehouseList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-    private List<Users> usersList;
+    private Collection<Users> usersCollection;
 
     public Employee() {
     }
@@ -74,7 +68,7 @@ public class Employee implements Serializable {
         this.empleyeeID = empleyeeID;
     }
 
-    public Employee(Integer empleyeeID, String name, int dni, Date date, int role, float payment) {
+    public Employee(Integer empleyeeID, String name, String dni, Date date, int role, float payment) {
         this.empleyeeID = empleyeeID;
         this.name = name;
         this.dni = dni;
@@ -99,11 +93,11 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -132,21 +126,12 @@ public class Employee implements Serializable {
     }
 
     @XmlTransient
-    public List<Warehouse> getWarehouseList() {
-        return warehouseList;
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
     }
 
-    public void setWarehouseList(List<Warehouse> warehouseList) {
-        this.warehouseList = warehouseList;
-    }
-
-    @XmlTransient
-    public List<Users> getUsersList() {
-        return usersList;
-    }
-
-    public void setUsersList(List<Users> usersList) {
-        this.usersList = usersList;
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @Override

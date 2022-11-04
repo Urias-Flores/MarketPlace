@@ -1,11 +1,13 @@
 package DAO;
 
 import Controllers.ProductJpaController;
-import Controllers.exceptions.NonexistentEntityException;
+import Controllers.exceptions.exceptions.NonexistentEntityException;
 import Models.Brand;
 import Models.Category;
 import Models.Product;
 import Resourse.Conection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 
 public class ProductDAO {
@@ -139,7 +141,8 @@ public class ProductDAO {
     public boolean delete(){
         try {
             productJpaController.destroy(ProductID);
-        } catch (NonexistentEntityException e) {
+        } catch (Controllers.exceptions.NonexistentEntityException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;

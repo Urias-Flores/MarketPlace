@@ -5,6 +5,8 @@ import Controllers.exceptions.IllegalOrphanException;
 import Controllers.exceptions.NonexistentEntityException;
 import Models.Brand;
 import Resourse.Conection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 
 public class BrandDAO {
@@ -58,7 +60,8 @@ public class BrandDAO {
     public boolean delete(){
         try {
             brandJpaController.destroy(BrandID);
-        } catch (IllegalOrphanException | NonexistentEntityException e) {
+        } catch (IllegalOrphanException | NonexistentEntityException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;

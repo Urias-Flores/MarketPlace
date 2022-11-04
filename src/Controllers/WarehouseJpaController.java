@@ -5,16 +5,15 @@
 package Controllers;
 
 import Controllers.exceptions.NonexistentEntityException;
+import Models.Warehouse;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Models.Employee;
-import Models.Warehouse;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,16 +35,7 @@ public class WarehouseJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee employee = warehouse.getEmployee();
-            if (employee != null) {
-                employee = em.getReference(employee.getClass(), employee.getEmpleyeeID());
-                warehouse.setEmployee(employee);
-            }
             em.persist(warehouse);
-            if (employee != null) {
-                employee.getWarehouseList().add(warehouse);
-                employee = em.merge(employee);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -59,22 +49,7 @@ public class WarehouseJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Warehouse persistentWarehouse = em.find(Warehouse.class, warehouse.getWarehouseID());
-            Employee employeeOld = persistentWarehouse.getEmployee();
-            Employee employeeNew = warehouse.getEmployee();
-            if (employeeNew != null) {
-                employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getEmpleyeeID());
-                warehouse.setEmployee(employeeNew);
-            }
             warehouse = em.merge(warehouse);
-            if (employeeOld != null && !employeeOld.equals(employeeNew)) {
-                employeeOld.getWarehouseList().remove(warehouse);
-                employeeOld = em.merge(employeeOld);
-            }
-            if (employeeNew != null && !employeeNew.equals(employeeOld)) {
-                employeeNew.getWarehouseList().add(warehouse);
-                employeeNew = em.merge(employeeNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -103,11 +78,6 @@ public class WarehouseJpaController implements Serializable {
                 warehouse.getWarehouseID();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The warehouse with id " + id + " no longer exists.", enfe);
-            }
-            Employee employee = warehouse.getEmployee();
-            if (employee != null) {
-                employee.getWarehouseList().remove(warehouse);
-                employee = em.merge(employee);
             }
             em.remove(warehouse);
             em.getTransaction().commit();

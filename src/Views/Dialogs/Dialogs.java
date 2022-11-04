@@ -16,6 +16,15 @@ public class Dialogs {
         okDialog.setMessage(Message);
         okDialog.setIcon(Icon);
         okDialog.setVisible(true);
+        okDialog.dispose();
+    }
+    
+    public static boolean ShowOKCancelDialog(String Message, int Icon){
+        OkCancelDialog okCancelDialog = new OkCancelDialog(null, true);
+        okCancelDialog.setIcon(Icon);
+        okCancelDialog.setMessage(Message);
+        okCancelDialog.setVisible(true);
+        return okCancelDialog.getValue();
     }
     
     public static void ShowAddBrandDialog(){

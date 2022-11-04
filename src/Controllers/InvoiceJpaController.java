@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Models.Clients;
 import Models.Invoice;
-import Models.Users;
 import Models.Invoicedetail;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +47,6 @@ public class InvoiceJpaController implements Serializable {
                 clients = em.getReference(clients.getClass(), clients.getClientID());
                 invoice.setClients(clients);
             }
-            Users users = invoice.getUsers();
-            if (users != null) {
-                users = em.getReference(users.getClass(), users.getUserID());
-                invoice.setUsers(users);
-            }
             List<Invoicedetail> attachedInvoicedetailList = new ArrayList<Invoicedetail>();
             for (Invoicedetail invoicedetailListInvoicedetailToAttach : invoice.getInvoicedetailList()) {
                 invoicedetailListInvoicedetailToAttach = em.getReference(invoicedetailListInvoicedetailToAttach.getClass(), invoicedetailListInvoicedetailToAttach.getInvoiceDetailID());
@@ -63,10 +57,6 @@ public class InvoiceJpaController implements Serializable {
             if (clients != null) {
                 clients.getInvoiceList().add(invoice);
                 clients = em.merge(clients);
-            }
-            if (users != null) {
-                users.getInvoiceList().add(invoice);
-                users = em.merge(users);
             }
             for (Invoicedetail invoicedetailListInvoicedetail : invoice.getInvoicedetailList()) {
                 Invoice oldInvoiceIDOfInvoicedetailListInvoicedetail = invoicedetailListInvoicedetail.getInvoiceID();
@@ -93,8 +83,6 @@ public class InvoiceJpaController implements Serializable {
             Invoice persistentInvoice = em.find(Invoice.class, invoice.getInvoiveID());
             Clients clientsOld = persistentInvoice.getClients();
             Clients clientsNew = invoice.getClients();
-            Users usersOld = persistentInvoice.getUsers();
-            Users usersNew = invoice.getUsers();
             List<Invoicedetail> invoicedetailListOld = persistentInvoice.getInvoicedetailList();
             List<Invoicedetail> invoicedetailListNew = invoice.getInvoicedetailList();
             List<String> illegalOrphanMessages = null;
@@ -113,10 +101,6 @@ public class InvoiceJpaController implements Serializable {
                 clientsNew = em.getReference(clientsNew.getClass(), clientsNew.getClientID());
                 invoice.setClients(clientsNew);
             }
-            if (usersNew != null) {
-                usersNew = em.getReference(usersNew.getClass(), usersNew.getUserID());
-                invoice.setUsers(usersNew);
-            }
             List<Invoicedetail> attachedInvoicedetailListNew = new ArrayList<Invoicedetail>();
             for (Invoicedetail invoicedetailListNewInvoicedetailToAttach : invoicedetailListNew) {
                 invoicedetailListNewInvoicedetailToAttach = em.getReference(invoicedetailListNewInvoicedetailToAttach.getClass(), invoicedetailListNewInvoicedetailToAttach.getInvoiceDetailID());
@@ -132,14 +116,6 @@ public class InvoiceJpaController implements Serializable {
             if (clientsNew != null && !clientsNew.equals(clientsOld)) {
                 clientsNew.getInvoiceList().add(invoice);
                 clientsNew = em.merge(clientsNew);
-            }
-            if (usersOld != null && !usersOld.equals(usersNew)) {
-                usersOld.getInvoiceList().remove(invoice);
-                usersOld = em.merge(usersOld);
-            }
-            if (usersNew != null && !usersNew.equals(usersOld)) {
-                usersNew.getInvoiceList().add(invoice);
-                usersNew = em.merge(usersNew);
             }
             for (Invoicedetail invoicedetailListNewInvoicedetail : invoicedetailListNew) {
                 if (!invoicedetailListOld.contains(invoicedetailListNewInvoicedetail)) {
@@ -196,11 +172,6 @@ public class InvoiceJpaController implements Serializable {
             if (clients != null) {
                 clients.getInvoiceList().remove(invoice);
                 clients = em.merge(clients);
-            }
-            Users users = invoice.getUsers();
-            if (users != null) {
-                users.getInvoiceList().remove(invoice);
-                users = em.merge(users);
             }
             em.remove(invoice);
             em.getTransaction().commit();

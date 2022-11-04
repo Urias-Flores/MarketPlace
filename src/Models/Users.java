@@ -5,9 +5,7 @@
 package Models;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +17,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -55,7 +51,7 @@ public class Users implements Serializable {
     private String email;
     @Basic(optional = false)
     @Column(name = "Number")
-    private int number;
+    private String number;
     @Basic(optional = false)
     @Lob
     @Column(name = "State")
@@ -72,8 +68,6 @@ public class Users implements Serializable {
         @JoinColumn(name = "EmpleyeeID", referencedColumnName = "EmpleyeeID")})
     @ManyToOne(optional = false)
     private Employee employee;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private List<Invoice> invoiceList;
 
     public Users() {
     }
@@ -82,7 +76,7 @@ public class Users implements Serializable {
         this.userID = userID;
     }
 
-    public Users(Integer userID, String userName, String email, int number, byte[] state, String code, String acces) {
+    public Users(Integer userID, String userName, String email, String number, byte[] state, String code, String acces) {
         this.userID = userID;
         this.userName = userName;
         this.email = email;
@@ -116,11 +110,11 @@ public class Users implements Serializable {
         this.email = email;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -154,15 +148,6 @@ public class Users implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-    }
-
-    @XmlTransient
-    public List<Invoice> getInvoiceList() {
-        return invoiceList;
-    }
-
-    public void setInvoiceList(List<Invoice> invoiceList) {
-        this.invoiceList = invoiceList;
     }
 
     @Override

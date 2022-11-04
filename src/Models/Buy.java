@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
@@ -39,6 +35,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Buy.findByDate", query = "SELECT b FROM Buy b WHERE b.date = :date"),
     @NamedQuery(name = "Buy.findByTime", query = "SELECT b FROM Buy b WHERE b.time = :time")})
 public class Buy implements Serializable {
+
+    @JoinColumns({
+        @JoinColumn(name = "UserID", referencedColumnName = "UserID"),
+        @JoinColumn(name = "UserID", referencedColumnName = "UserID"),
+        @JoinColumn(name = "UserID", referencedColumnName = "UserID"),
+        @JoinColumn(name = "UserID", referencedColumnName = "UserID"),
+        @JoinColumn(name = "UserID", referencedColumnName = "UserID")})
+    @ManyToOne(optional = false)
+    private Users users;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -140,6 +145,14 @@ public class Buy implements Serializable {
     @Override
     public String toString() {
         return "Models.Buy[ buyID=" + buyID + " ]";
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
     
 }

@@ -12,10 +12,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Models.Warehouse;
-import java.util.ArrayList;
-import java.util.List;
 import Models.Users;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -35,45 +35,27 @@ public class EmployeeJpaController implements Serializable {
     }
 
     public void create(Employee employee) {
-        if (employee.getWarehouseList() == null) {
-            employee.setWarehouseList(new ArrayList<Warehouse>());
-        }
-        if (employee.getUsersList() == null) {
-            employee.setUsersList(new ArrayList<Users>());
+        if (employee.getUsersCollection() == null) {
+            employee.setUsersCollection(new ArrayList<Users>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Warehouse> attachedWarehouseList = new ArrayList<Warehouse>();
-            for (Warehouse warehouseListWarehouseToAttach : employee.getWarehouseList()) {
-                warehouseListWarehouseToAttach = em.getReference(warehouseListWarehouseToAttach.getClass(), warehouseListWarehouseToAttach.getWarehouseID());
-                attachedWarehouseList.add(warehouseListWarehouseToAttach);
+            Collection<Users> attachedUsersCollection = new ArrayList<Users>();
+            for (Users usersCollectionUsersToAttach : employee.getUsersCollection()) {
+                usersCollectionUsersToAttach = em.getReference(usersCollectionUsersToAttach.getClass(), usersCollectionUsersToAttach.getUserID());
+                attachedUsersCollection.add(usersCollectionUsersToAttach);
             }
-            employee.setWarehouseList(attachedWarehouseList);
-            List<Users> attachedUsersList = new ArrayList<Users>();
-            for (Users usersListUsersToAttach : employee.getUsersList()) {
-                usersListUsersToAttach = em.getReference(usersListUsersToAttach.getClass(), usersListUsersToAttach.getUserID());
-                attachedUsersList.add(usersListUsersToAttach);
-            }
-            employee.setUsersList(attachedUsersList);
+            employee.setUsersCollection(attachedUsersCollection);
             em.persist(employee);
-            for (Warehouse warehouseListWarehouse : employee.getWarehouseList()) {
-                Employee oldEmployeeOfWarehouseListWarehouse = warehouseListWarehouse.getEmployee();
-                warehouseListWarehouse.setEmployee(employee);
-                warehouseListWarehouse = em.merge(warehouseListWarehouse);
-                if (oldEmployeeOfWarehouseListWarehouse != null) {
-                    oldEmployeeOfWarehouseListWarehouse.getWarehouseList().remove(warehouseListWarehouse);
-                    oldEmployeeOfWarehouseListWarehouse = em.merge(oldEmployeeOfWarehouseListWarehouse);
-                }
-            }
-            for (Users usersListUsers : employee.getUsersList()) {
-                Employee oldEmployeeOfUsersListUsers = usersListUsers.getEmployee();
-                usersListUsers.setEmployee(employee);
-                usersListUsers = em.merge(usersListUsers);
-                if (oldEmployeeOfUsersListUsers != null) {
-                    oldEmployeeOfUsersListUsers.getUsersList().remove(usersListUsers);
-                    oldEmployeeOfUsersListUsers = em.merge(oldEmployeeOfUsersListUsers);
+            for (Users usersCollectionUsers : employee.getUsersCollection()) {
+                Employee oldEmployeeOfUsersCollectionUsers = usersCollectionUsers.getEmployee();
+                usersCollectionUsers.setEmployee(employee);
+                usersCollectionUsers = em.merge(usersCollectionUsers);
+                if (oldEmployeeOfUsersCollectionUsers != null) {
+                    oldEmployeeOfUsersCollectionUsers.getUsersCollection().remove(usersCollectionUsers);
+                    oldEmployeeOfUsersCollectionUsers = em.merge(oldEmployeeOfUsersCollectionUsers);
                 }
             }
             em.getTransaction().commit();
@@ -90,64 +72,36 @@ public class EmployeeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Employee persistentEmployee = em.find(Employee.class, employee.getEmpleyeeID());
-            List<Warehouse> warehouseListOld = persistentEmployee.getWarehouseList();
-            List<Warehouse> warehouseListNew = employee.getWarehouseList();
-            List<Users> usersListOld = persistentEmployee.getUsersList();
-            List<Users> usersListNew = employee.getUsersList();
+            Collection<Users> usersCollectionOld = persistentEmployee.getUsersCollection();
+            Collection<Users> usersCollectionNew = employee.getUsersCollection();
             List<String> illegalOrphanMessages = null;
-            for (Warehouse warehouseListOldWarehouse : warehouseListOld) {
-                if (!warehouseListNew.contains(warehouseListOldWarehouse)) {
+            for (Users usersCollectionOldUsers : usersCollectionOld) {
+                if (!usersCollectionNew.contains(usersCollectionOldUsers)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Warehouse " + warehouseListOldWarehouse + " since its employee field is not nullable.");
-                }
-            }
-            for (Users usersListOldUsers : usersListOld) {
-                if (!usersListNew.contains(usersListOldUsers)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Users " + usersListOldUsers + " since its employee field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Users " + usersCollectionOldUsers + " since its employee field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Warehouse> attachedWarehouseListNew = new ArrayList<Warehouse>();
-            for (Warehouse warehouseListNewWarehouseToAttach : warehouseListNew) {
-                warehouseListNewWarehouseToAttach = em.getReference(warehouseListNewWarehouseToAttach.getClass(), warehouseListNewWarehouseToAttach.getWarehouseID());
-                attachedWarehouseListNew.add(warehouseListNewWarehouseToAttach);
+            Collection<Users> attachedUsersCollectionNew = new ArrayList<Users>();
+            for (Users usersCollectionNewUsersToAttach : usersCollectionNew) {
+                usersCollectionNewUsersToAttach = em.getReference(usersCollectionNewUsersToAttach.getClass(), usersCollectionNewUsersToAttach.getUserID());
+                attachedUsersCollectionNew.add(usersCollectionNewUsersToAttach);
             }
-            warehouseListNew = attachedWarehouseListNew;
-            employee.setWarehouseList(warehouseListNew);
-            List<Users> attachedUsersListNew = new ArrayList<Users>();
-            for (Users usersListNewUsersToAttach : usersListNew) {
-                usersListNewUsersToAttach = em.getReference(usersListNewUsersToAttach.getClass(), usersListNewUsersToAttach.getUserID());
-                attachedUsersListNew.add(usersListNewUsersToAttach);
-            }
-            usersListNew = attachedUsersListNew;
-            employee.setUsersList(usersListNew);
+            usersCollectionNew = attachedUsersCollectionNew;
+            employee.setUsersCollection(usersCollectionNew);
             employee = em.merge(employee);
-            for (Warehouse warehouseListNewWarehouse : warehouseListNew) {
-                if (!warehouseListOld.contains(warehouseListNewWarehouse)) {
-                    Employee oldEmployeeOfWarehouseListNewWarehouse = warehouseListNewWarehouse.getEmployee();
-                    warehouseListNewWarehouse.setEmployee(employee);
-                    warehouseListNewWarehouse = em.merge(warehouseListNewWarehouse);
-                    if (oldEmployeeOfWarehouseListNewWarehouse != null && !oldEmployeeOfWarehouseListNewWarehouse.equals(employee)) {
-                        oldEmployeeOfWarehouseListNewWarehouse.getWarehouseList().remove(warehouseListNewWarehouse);
-                        oldEmployeeOfWarehouseListNewWarehouse = em.merge(oldEmployeeOfWarehouseListNewWarehouse);
-                    }
-                }
-            }
-            for (Users usersListNewUsers : usersListNew) {
-                if (!usersListOld.contains(usersListNewUsers)) {
-                    Employee oldEmployeeOfUsersListNewUsers = usersListNewUsers.getEmployee();
-                    usersListNewUsers.setEmployee(employee);
-                    usersListNewUsers = em.merge(usersListNewUsers);
-                    if (oldEmployeeOfUsersListNewUsers != null && !oldEmployeeOfUsersListNewUsers.equals(employee)) {
-                        oldEmployeeOfUsersListNewUsers.getUsersList().remove(usersListNewUsers);
-                        oldEmployeeOfUsersListNewUsers = em.merge(oldEmployeeOfUsersListNewUsers);
+            for (Users usersCollectionNewUsers : usersCollectionNew) {
+                if (!usersCollectionOld.contains(usersCollectionNewUsers)) {
+                    Employee oldEmployeeOfUsersCollectionNewUsers = usersCollectionNewUsers.getEmployee();
+                    usersCollectionNewUsers.setEmployee(employee);
+                    usersCollectionNewUsers = em.merge(usersCollectionNewUsers);
+                    if (oldEmployeeOfUsersCollectionNewUsers != null && !oldEmployeeOfUsersCollectionNewUsers.equals(employee)) {
+                        oldEmployeeOfUsersCollectionNewUsers.getUsersCollection().remove(usersCollectionNewUsers);
+                        oldEmployeeOfUsersCollectionNewUsers = em.merge(oldEmployeeOfUsersCollectionNewUsers);
                     }
                 }
             }
@@ -181,19 +135,12 @@ public class EmployeeJpaController implements Serializable {
                 throw new NonexistentEntityException("The employee with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Warehouse> warehouseListOrphanCheck = employee.getWarehouseList();
-            for (Warehouse warehouseListOrphanCheckWarehouse : warehouseListOrphanCheck) {
+            Collection<Users> usersCollectionOrphanCheck = employee.getUsersCollection();
+            for (Users usersCollectionOrphanCheckUsers : usersCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Warehouse " + warehouseListOrphanCheckWarehouse + " in its warehouseList field has a non-nullable employee field.");
-            }
-            List<Users> usersListOrphanCheck = employee.getUsersList();
-            for (Users usersListOrphanCheckUsers : usersListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Users " + usersListOrphanCheckUsers + " in its usersList field has a non-nullable employee field.");
+                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Users " + usersCollectionOrphanCheckUsers + " in its usersCollection field has a non-nullable employee field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

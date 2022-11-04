@@ -1,6 +1,7 @@
 
 package Views.Dialogs;
 
+import Resourse.Utilities;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -49,6 +50,7 @@ public class OkDialog extends javax.swing.JDialog {
     public OkDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        txtClose.addMouseListener(Utilities.getMlButtonClose());
     }
 
     /**
