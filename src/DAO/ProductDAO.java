@@ -1,7 +1,6 @@
 package DAO;
 
 import Controllers.ProductJpaController;
-import Controllers.exceptions.exceptions.NonexistentEntityException;
 import Models.Brand;
 import Models.Category;
 import Models.Product;

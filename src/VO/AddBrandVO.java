@@ -19,7 +19,6 @@ public class AddBrandVO {
     
     public void saveBrand(){
         brandDAO.setName(Name.getText());
-        
         brandDAO.save();
     }
     

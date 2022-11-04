@@ -166,6 +166,8 @@ public class AddBrandDialog extends javax.swing.JDialog {
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
         if(addBrandVO.validate()){
             addBrandVO.saveBrand();
+            this.setVisible(false);
+            Dialogs.ShowOKDialog("¡Marca agregada con exito!", Dialogs.OK_ICON);
         }
     }//GEN-LAST:event_btnCheckInActionPerformed
 

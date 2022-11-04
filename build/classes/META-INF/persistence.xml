@@ -10,11 +10,11 @@
     <class>Models.Users</class>
     <class>Models.Buydetail</class>
     <class>Models.Supplier</class>
-    <class>Models.Product</class>
     <class>Models.Buy</class>
     <class>Models.Employee</class>
     <class>Models.Location</class>
     <class>Models.Brand</class>
+    <class>Models.Product</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marketplace?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

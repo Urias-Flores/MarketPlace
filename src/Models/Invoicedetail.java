@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
@@ -59,7 +55,7 @@ public class Invoicedetail implements Serializable {
     @JoinColumn(name = "InvoiceID", referencedColumnName = "InvoiveID")
     @ManyToOne(optional = false)
     private Invoice invoiceID;
-    @JoinColumn(name = "ProductID", referencedColumnName = "ProducrID")
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     @ManyToOne(optional = false)
     private Product productID;
 

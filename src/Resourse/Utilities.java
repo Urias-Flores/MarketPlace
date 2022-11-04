@@ -101,12 +101,6 @@ public class Utilities {
         }
     };
     
-    public static void showNewDialog(Component old, Component newComponent){
-        old.setVisible(false);
-        newComponent.setVisible(true);
-        old.setVisible(true);
-    }
-
     public static String getActualUser() {
         return ActualUser;
     }

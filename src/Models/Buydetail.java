@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
@@ -18,10 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Dell
- */
 @Entity
 @Table(name = "buydetail")
 @XmlRootElement
@@ -59,7 +51,7 @@ public class Buydetail implements Serializable {
     @JoinColumn(name = "BuyID", referencedColumnName = "BuyID")
     @ManyToOne(optional = false)
     private Buy buyID;
-    @JoinColumn(name = "ProductID", referencedColumnName = "ProducrID")
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     @ManyToOne(optional = false)
     private Product productID;
 

@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +12,8 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,8 +37,6 @@ public class Warehouse implements Serializable {
     @Basic(optional = false)
     @Column(name = "Name")
     private String name;
-    @OneToMany(mappedBy = "warehouse")
-    private List<Product> productList;
     @JoinColumns({
         @JoinColumn(name = "EmployeeID", referencedColumnName = "EmpleyeeID"),
         @JoinColumn(name = "EmployeeID", referencedColumnName = "EmpleyeeID"),
@@ -79,15 +70,6 @@ public class Warehouse implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @XmlTransient
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
     }
 
     public Employee getEmployee() {
