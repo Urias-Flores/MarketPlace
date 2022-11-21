@@ -1,6 +1,7 @@
 package Views.Dialogs.Control;
 
 import Resourse.Utilities;
+import VO.AddProductVO;
 import Views.Dialogs.Dialogs;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -9,10 +10,12 @@ public class AddProductDialog extends javax.swing.JDialog {
     
     private int X, Y;
     private ArrayList<JLabel> buttonsList = new ArrayList<>();
+    private AddProductVO addProductVO = null;
 
     public AddProductDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         txtClose.addMouseListener(Utilities.getMlButtonClose());
         
         buttonsList.add(btnAddBrand); buttonsList.add(btnAddCategory);
@@ -21,6 +24,9 @@ public class AddProductDialog extends javax.swing.JDialog {
         buttonsList.forEach((btn)->{
             btn.addMouseListener(Utilities.getMlButtonGray());
         });
+        
+        addProductVO = new AddProductVO(txtDescription, cmbBrand, cmbCategory, txtBuyPrice, txtSellPrice, txtCodeBar, lbImage);
+        addProductVO.Load();
     }
     
     
@@ -37,21 +43,21 @@ public class AddProductDialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtBuyPrice = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtSellPrice = new javax.swing.JTextField();
+        txtCodeBar = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel11 = new javax.swing.JLabel();
+        txtDescription = new javax.swing.JTextArea();
+        lbImage = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
         btnCheckIn = new javax.swing.JButton();
         txtError = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbBrand = new javax.swing.JComboBox<>();
         btnSearchBrand = new javax.swing.JLabel();
         btnAddBrand = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbCategory = new javax.swing.JComboBox<>();
         btnSearchCategory = new javax.swing.JLabel();
         btnAddCategory = new javax.swing.JLabel();
 
@@ -111,30 +117,30 @@ public class AddProductDialog extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel7.setText("Precio de compra base");
 
-        jTextField5.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jTextField5.setPreferredSize(new java.awt.Dimension(90, 35));
+        txtBuyPrice.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txtBuyPrice.setPreferredSize(new java.awt.Dimension(90, 35));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel8.setText("Precio de venta base");
 
-        jTextField6.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jTextField6.setPreferredSize(new java.awt.Dimension(90, 35));
+        txtSellPrice.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txtSellPrice.setPreferredSize(new java.awt.Dimension(90, 35));
 
-        jTextField8.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jTextField8.setPreferredSize(new java.awt.Dimension(90, 35));
+        txtCodeBar.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txtCodeBar.setPreferredSize(new java.awt.Dimension(90, 35));
 
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel10.setText("Codigo de barras");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(3);
-        jTextArea1.setTabSize(4);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDescription.setColumns(20);
+        txtDescription.setRows(3);
+        txtDescription.setTabSize(4);
+        jScrollPane1.setViewportView(txtDescription);
 
-        jLabel11.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Click aqui para agregar una imagen");
-        jLabel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Imagen de producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Roboto", 0, 20))); // NOI18N
+        lbImage.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbImage.setText("Click aqui para agregar una imagen");
+        lbImage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Imagen de producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Roboto", 0, 20))); // NOI18N
 
         btnCancel.setBackground(new java.awt.Color(144, 40, 40));
         btnCancel.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
@@ -165,8 +171,7 @@ public class AddProductDialog extends javax.swing.JDialog {
         txtError.setOpaque(true);
         txtError.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-        jComboBox1.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione --" }));
+        cmbBrand.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
 
         btnSearchBrand.setBackground(new java.awt.Color(255, 255, 255));
         btnSearchBrand.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -185,8 +190,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBox2.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione --" }));
+        cmbCategory.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
 
         btnSearchCategory.setBackground(new java.awt.Color(255, 255, 255));
         btnSearchCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -199,6 +203,11 @@ public class AddProductDialog extends javax.swing.JDialog {
         btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
         btnAddCategory.setToolTipText("Agregar marca");
         btnAddCategory.setOpaque(true);
+        btnAddCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddCategoryMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,7 +218,7 @@ public class AddProductDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -217,23 +226,23 @@ public class AddProductDialog extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtBuyPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSellPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodeBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnAddBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -259,30 +268,30 @@ public class AddProductDialog extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1)
+                    .addComponent(cmbBrand)
                     .addComponent(btnSearchBrand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAddBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox2)
+                    .addComponent(cmbCategory)
                     .addComponent(btnSearchCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSellPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCodeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -336,6 +345,12 @@ public class AddProductDialog extends javax.swing.JDialog {
         this.setVisible(true);
     }//GEN-LAST:event_btnAddBrandMouseClicked
 
+    private void btnAddCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCategoryMouseClicked
+        this.setVisible(false);
+        Dialogs.ShowAddCategoryDialog();
+        this.setVisible(true);
+    }//GEN-LAST:event_btnAddCategoryMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -383,10 +398,9 @@ public class AddProductDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JLabel btnSearchBrand;
     private javax.swing.JLabel btnSearchCategory;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cmbBrand;
+    private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -395,12 +409,13 @@ public class AddProductDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel lbImage;
     private javax.swing.JPanel pnBarra;
+    private javax.swing.JTextField txtBuyPrice;
     private javax.swing.JLabel txtClose;
+    private javax.swing.JTextField txtCodeBar;
+    private javax.swing.JTextArea txtDescription;
     private javax.swing.JLabel txtError;
+    private javax.swing.JTextField txtSellPrice;
     // End of variables declaration//GEN-END:variables
 }

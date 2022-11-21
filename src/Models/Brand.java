@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
@@ -20,10 +16,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Dell
- */
 @Entity
 @Table(name = "brand")
 @XmlRootElement
@@ -104,7 +96,7 @@ public class Brand implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Brand[ brandID=" + brandID + " ]";
+        return name;
     }
     
 }

@@ -7,8 +7,7 @@ import javax.swing.JTextField;
 public class AddBrandVO {
     
     private JTextField Name;
-    private JLabel Error;
-            
+    private JLabel Error;    
     private final BrandDAO brandDAO;
 
     public AddBrandVO(JTextField Name, JLabel Error) {

@@ -1,5 +1,6 @@
 package Views;
 
+import Resourse.Conection;
 import Resourse.Utilities;
 import Views.Panels.Administracion.Estadisticas;
 import Views.Panels.Administracion.Resumen;
@@ -62,6 +63,11 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -254,6 +260,15 @@ public class Main extends javax.swing.JFrame {
         LoadPanel(5);
         paintWhite();
     }//GEN-LAST:event_btn5MouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try{
+            Conection.Disconnect(Conection.emf.createEntityManager());
+            System.out.println("La conexion con el servidor se cerro correctamente");
+        }catch(Exception ex){
+            System.err.println("La conexion con el servidor no pudo cerrarse correctamente");
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

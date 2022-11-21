@@ -33,6 +33,12 @@ public class Dialogs {
         addBrandDialog.dispose();
     }
     
+    public static void ShowAddCategoryDialog(){
+        AddCategoryDialog addCategoryDialog = new AddCategoryDialog(null, true);
+        addCategoryDialog.setVisible(true);
+        addCategoryDialog.dispose();
+    }
+    
     public static void ShowAddProductDialog(){
         AddProductDialog addProductDialog = new AddProductDialog(null, true);
         addProductDialog.setVisible(true);

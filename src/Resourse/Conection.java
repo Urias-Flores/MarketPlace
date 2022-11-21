@@ -11,6 +11,7 @@ public class Conection {
         try{
             if(emf == null){
                 emf = Persistence.createEntityManagerFactory("MarketPlacePU");
+                System.out.println("Conecxion con el servidor abierta");
             }
         }catch(Exception ex){
             System.out.print("Error: "+ex.getMessage());

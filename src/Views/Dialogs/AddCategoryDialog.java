@@ -1,20 +1,21 @@
 package Views.Dialogs;
 
 import Resourse.Utilities;
-import VO.AddBrandVO;
+import VO.AddCategoryVO;
 
-public class AddBrandDialog extends javax.swing.JDialog {
+
+public class AddCategoryDialog extends javax.swing.JDialog {
 
     private int X, Y;
-    private final AddBrandVO addBrandVO;
+    private final AddCategoryVO addCategoryVO;
     
-    public AddBrandDialog(java.awt.Frame parent, boolean modal) {
+    public AddCategoryDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         txtClose.addMouseListener(Utilities.getMlButtonClose());
-        
-        addBrandVO = new AddBrandVO(txtName, txtError);
+        addCategoryVO = new AddCategoryVO(txtName, txtError);
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,7 +64,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
         pnBarraLayout.setHorizontalGroup(
             pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
-                .addGap(0, 522, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(txtClose, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnBarraLayout.setVerticalGroup(
@@ -72,7 +73,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
         );
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 22)); // NOI18N
-        jLabel2.setText("Agregar nueva marca");
+        jLabel2.setText("Agregar nueva categoria");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         jLabel3.setText("Nombre");
@@ -106,7 +107,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(273, Short.MAX_VALUE)
                         .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -129,7 +130,7 @@ public class AddBrandDialog extends javax.swing.JDialog {
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -149,10 +150,9 @@ public class AddBrandDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pnBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMousePressed
-        X = evt.getX();
-        Y = evt.getY();
-    }//GEN-LAST:event_pnBarraMousePressed
+    private void txtCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCloseMouseClicked
+        this.setVisible(false);
+    }//GEN-LAST:event_txtCloseMouseClicked
 
     private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
         int x = evt.getXOnScreen();
@@ -160,13 +160,14 @@ public class AddBrandDialog extends javax.swing.JDialog {
         this.setLocation(x - X, y - Y);
     }//GEN-LAST:event_pnBarraMouseDragged
 
-    private void txtCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCloseMouseClicked
-        this.setVisible(false);
-    }//GEN-LAST:event_txtCloseMouseClicked
+    private void pnBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMousePressed
+        X = evt.getX();
+        Y = evt.getY();
+    }//GEN-LAST:event_pnBarraMousePressed
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
-        if(addBrandVO.validate()){
-            addBrandVO.saveBrand();
+        if(addCategoryVO.validate()){
+            addCategoryVO.saveCategory();
             this.setVisible(false);
             Dialogs.ShowOKDialog("¡Marca agregada con exito!", Dialogs.OK_ICON);
         }
@@ -189,27 +190,28 @@ public class AddBrandDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddBrandDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddBrandDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddBrandDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddBrandDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCategoryDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(() -> {
-            AddBrandDialog dialog = new AddBrandDialog(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AddCategoryDialog dialog = new AddCategoryDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
         });
     }
 

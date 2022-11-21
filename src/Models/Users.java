@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.io.Serializable;
@@ -63,9 +59,9 @@ public class Users implements Serializable {
     @Column(name = "Acces")
     private String acces;
     @JoinColumns({
-        @JoinColumn(name = "EmpleyeeID", referencedColumnName = "EmpleyeeID"),
-        @JoinColumn(name = "EmpleyeeID", referencedColumnName = "EmpleyeeID"),
-        @JoinColumn(name = "EmpleyeeID", referencedColumnName = "EmpleyeeID")})
+        @JoinColumn(name = "EmployeeID", referencedColumnName = "EmployeeID"),
+        @JoinColumn(name = "EmployeeID", referencedColumnName = "EmployeeID"),
+        @JoinColumn(name = "EmployeeID", referencedColumnName = "EmployeeID")})
     @ManyToOne(optional = false)
     private Employee employee;
 
